@@ -29,6 +29,17 @@ Run the request N times :
 myBot.runNTimes(N) #N = amount of requests to send
 ```
 
+Getter & Setter
+
+```python
+myBot.getBody() # Gets the body
+myBot.setBody(body) # Sets the new body
+
+myBot.getUrl() # Gets the url
+myBot.setUrl(url) # Sets the url
+```
+
+
 ## Options
 GmailDotTrick to to change emails
 ```python

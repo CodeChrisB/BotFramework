@@ -4,6 +4,7 @@ import concurrent.futures as cf
 from time import sleep
 import string, random
 import BotReq.util.generate as gen
+import BotReq.util.jsonManipulate as manipulate
 
 from requests.api import options
 
@@ -21,9 +22,6 @@ class BotReq:
     def __init__(self, body,url):
         self.body = body
         self.url = url
-
-
-    
 
     def setBody(self,newBody):
         self.body = newBody
@@ -49,29 +47,30 @@ class BotReq:
                     self.body[self.options["emailField"]] = self.options["permutations"][i]
                 self.runRequest()
 
-
 #
 # OPTIONS
 #
     options={
-        "output":-1,
-        "premutGmail":-1,
+        "output":False,
+        "premutGmail":-False,
         "emailField":"email",
         "permutations":[]
     }
 
     def PremutGmail(self,emailField):
-        self.options["permutGmail"] = 1
-        self.options["emailField"] = emailField
-        self.options["permutations"] = gen.permuations((self.body[self.options["emailField"]]))
+        manipulate.changeKeyValuePair(self.options,"permutGmail",1)
+        manipulate.changeKeyValuePair(self.options,"emailField",emailField)
+        manipulate.changeKeyValuePair(
+            self.options,
+            "permutations",
+            gen.permuations((self.body[self.options["emailField"]]))
+        )
 
     def PrintOutPut(self,val):
-        self.options["output"] = val
+        manipulate.changeKeyValuePair(self.options,"output",val)
     
     def ChangeBodyValue(self,key,value):
-        if(self.body[key]):
-            self.body[key]=value
+        manipulate.changeKeyValuePair(self.body,key,value)
 
     def AddBodyValue(self,key,value):
-        if(not(self.body.get(key))):
-            self.body.update({key:value})
+        manipulate.addKeyValuePair(self.body,key,value)
