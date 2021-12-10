@@ -1,6 +1,5 @@
-from re import U
 import BotReq.bot as bot
-import BotReq.util.generate as gen
+
 
 url="https://impflotterie-salzburg-ag.at/json/action/promotionActions.php"
 body ={
@@ -19,5 +18,9 @@ body ={
 
 myBot =bot.BotReq(body,url)
 
-myBot.PrintOutPut(-1)
-myBot.runNTimes(5)
+myBot.PremutGmail("email")
+myBot.PrintOutPut(True)
+myBot.AddBodyValue("email","cocoplenty32")
+myBot.AddBodyValue("ee","cocoplenty32")
+print(myBot.getBody())
+#myBot.runNTimes(5)
