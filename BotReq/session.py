@@ -6,10 +6,6 @@ import re
 
  
 class Session:
-    session = None
-    sessionUrl = None
-    sessionText = None
-
     def __init__(self,url):
         self.session = requests.session()
         self.sessionUrl = url

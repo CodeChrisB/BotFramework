@@ -12,10 +12,7 @@ from requests.api import options
 #
 #VARIABLES
 #
-body={}
-bulkNumber=1
-url=""
-session = None
+
 class BotReq:
 
     #
@@ -24,6 +21,7 @@ class BotReq:
     def __init__(self, body,url):
         self.body = body
         self.url = url
+        self.session = None
 
     #region Getter & Setter
     def setBody(self,newBody):
@@ -89,12 +87,9 @@ class BotReq:
 
     def PrintOutPut(self,val):
         manipulate.changeKeyValuePair(self.options,"output",val)
-    
+        
     def ChangeBodyValue(self,key,value):
         manipulate.changeKeyValuePair(self.body,key,value)
 
     def AddBodyValue(self,key,value):
         manipulate.addKeyValuePair(self.body,key,value)
-    
-    def __ex():
-        raise Exception("dfff")

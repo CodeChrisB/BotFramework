@@ -1,5 +1,5 @@
 def changeKeyValuePair(json,key,value):
-    if(json[key]):
+    if(json.get(key)!=None):
         json[key]=value
 
 def addKeyValuePair(json,key,value):
