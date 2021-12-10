@@ -18,6 +18,6 @@ body ={
 }
 
 myBot =bot.BotReq(body,url)
-myBot.output=1
 
-myBot.runRequest()
+myBot.PrintOutPut(-1)
+myBot.runNTimes(5)

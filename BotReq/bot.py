@@ -40,9 +40,9 @@ class BotReq:
     
     def runNTimes(self,n):
         with cf.ThreadPoolExecutor() as executor:
-            for i in range(262,16500): 
+            for i in range(n): 
                 r = requests.post(self.url, data=self.body)
-                if(val):
+                if(self.output):
                     print(r.text)
 
 #
