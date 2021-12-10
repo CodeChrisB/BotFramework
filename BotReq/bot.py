@@ -1,21 +1,23 @@
-import re as re
+import re
 import requests
 import concurrent.futures as cf
 from time import sleep
 import string, random
+
 import BotReq.util.generate as gen
 import BotReq.util.jsonManipulate as manipulate
-
+import BotReq.session as sessionObj
 from requests.api import options
 
 #
 #VARIABLES
 #
+body={}
+bulkNumber=1
+url=""
+session = None
 class BotReq:
-    body={}
-    bulkNumber=1
-    url=""
-    
+
     #
     #METHODS
     #
@@ -23,6 +25,7 @@ class BotReq:
         self.body = body
         self.url = url
 
+    #region Getter & Setter
     def setBody(self,newBody):
         self.body = newBody
 
@@ -35,6 +38,19 @@ class BotReq:
     def getUrl(self):
         return self.url
 
+    def getSession(self):
+        return self.session
+    #endregion
+
+    #region Session
+    def createSession(self,url):
+        self.session = sessionObj.Session(url)
+    
+    def Session(self):
+        return self.session
+
+
+    #endregion
     def runRequest(self):
         r = requests.post(self.url,data=self.body)
         if(self.options["output"]):
@@ -43,16 +59,21 @@ class BotReq:
     def runNTimes(self,n):
         with cf.ThreadPoolExecutor() as executor:
             for i in range(n): 
-                if(self.options["premutGmail"]):
+                if(self.options["permutGmail"]):
                     self.body[self.options["emailField"]] = self.options["permutations"][i]
                 self.runRequest()
+    
+    def runPermutationTimes(self):
+        if(self.options["permutations"]==[]):
+            raise ValueError("Either the method PermutGmail(string) was not called or there does not exist any permutations for the given value")
+        self.runNTimes(len(self.options["permutations"].l))
 
 #
 # OPTIONS
 #
     options={
         "output":False,
-        "premutGmail":-False,
+        "permutGmail":-False,
         "emailField":"email",
         "permutations":[]
     }
@@ -74,3 +95,6 @@ class BotReq:
 
     def AddBodyValue(self,key,value):
         manipulate.addKeyValuePair(self.body,key,value)
+    
+    def __ex():
+        raise Exception("dfff")

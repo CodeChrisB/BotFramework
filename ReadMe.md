@@ -34,9 +34,9 @@ Getter & Setter
 ```python
 myBot.getBody() # Gets the body
 myBot.setBody(body) # Sets the new body
-
 myBot.getUrl() # Gets the url
 myBot.setUrl(url) # Sets the url
+myBot.getSession() # Gets the current session
 ```
 
 
@@ -64,4 +64,22 @@ Change a sigle key-value pair of the body
 ```python
 #Changes the body value of "email"  to "john.smith@gmail.com" if it exist
 myBot.ChangeBodyValue("email","john.smith@gmail.com")
+```
+
+## Session
+
+Create a session
+```python
+#Creates a new session on the requested website.
+myBot.createSession('YourWebsite')
+```
+Get all Elements by Regex
+```python
+#Returns all elements which are selected by the given Regex.
+elements = myBot.Session().findElementByRegex('YourRegex')
+```
+Get session cookies
+```python
+# Returns the cookies of the session.
+cookies = myBot.Session().getCookies()
 ```
