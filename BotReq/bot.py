@@ -7,6 +7,7 @@ import string, random
 import BotReq.util.generate as gen
 import BotReq.util.jsonManipulate as manipulate
 import BotReq.session as sessionObj
+import BotReq.util.image as image
 from requests.api import options
 
 #
@@ -47,6 +48,11 @@ class BotReq:
     def Session(self):
         return self.session
 
+    #region Image
+    def downloadImage(url,path):
+        image.downloadImage(url,path)
+        
+    #endregion
 
     #endregion
     def runRequest(self):
