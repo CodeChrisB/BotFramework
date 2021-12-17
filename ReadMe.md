@@ -1,8 +1,7 @@
 # BotFramework
 
 ## Use cases
-- Todo
-
+- Downloading a lot of images [Example](https://github.com/CodeChrisB/BotFramework/blob/master/examples/dogImages.py)
 # Documentation
 
 Import the Library
