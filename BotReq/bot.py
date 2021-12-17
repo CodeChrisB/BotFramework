@@ -8,14 +8,14 @@ import BotReq.util.generate as gen
 import BotReq.util.jsonManipulate as manipulate
 import BotReq.session as sessionObj
 import BotReq.util.image as image
+import BotReq.util.enum as enum
 from requests.api import options
-
+import BotReq.util.enum as REQUEST
 #
 #VARIABLES
 #
 
 class BotReq:
-
     #
     #METHODS
     #
@@ -23,6 +23,18 @@ class BotReq:
         self.body = body
         self.url = url
         self.session = None
+        self.header = {}
+        self.request = REQUEST.ENUM.POST
+
+    #
+    # REQUESTS TYPE
+    #
+
+   
+    def REQUEST(self):
+       return self.REQUEST
+
+
 
     #region Getter & Setter
     def setBody(self,newBody):
@@ -39,6 +51,13 @@ class BotReq:
 
     def getSession(self):
         return self.session
+    
+    def setHeader(self,header):
+        self.header = header
+    
+    def setRequest(self,request):
+        self.request = request
+
     #endregion
 
     #region Session
@@ -56,9 +75,17 @@ class BotReq:
 
     #endregion
     def runRequest(self):
-        r = requests.post(self.url,data=self.body)
+        r = None
+        if(REQUEST.ENUM.POST == self.request):
+            r = requests.post(self.url,data=self.body,headers=self.header)
+        elif(REQUEST.ENUM.GET == self.request):
+            r = requests.get(self.url,data=self.body,headers=self.header)
         if(self.options["output"]):
-            print(r.text)
+           print(r.text)
+        if(self.options["return"]):
+            return r.text
+        
+        
     
     def runNTimes(self,n):
         with cf.ThreadPoolExecutor() as executor:
@@ -72,15 +99,24 @@ class BotReq:
             raise ValueError("Either the method PermutGmail(string) was not called or there does not exist any permutations for the given value")
         self.runNTimes(len(self.options["permutations"].l))
 
+
+#TODO!!
+#Let the user set the header
+#headers = {'Accept-Encoding': 'identity'}
+#r = requests.get(url, headers=headers)
+
 #
 # OPTIONS
 #
     options={
         "output":False,
-        "permutGmail":-False,
+        "permutGmail":False,
         "emailField":"email",
-        "permutations":[]
+        "permutations":[],
+        "return":False
     }
+
+
 
     def PremutGmail(self,emailField):
         manipulate.changeKeyValuePair(self.options,"permutGmail",1)
@@ -93,6 +129,10 @@ class BotReq:
 
     def PrintOutPut(self,val):
         manipulate.changeKeyValuePair(self.options,"output",val)
+    
+    def RetrunResponse(self,val):
+        manipulate.changeKeyValuePair(self.options,"return",val)
+
         
     def ChangeBodyValue(self,key,value):
         manipulate.changeKeyValuePair(self.body,key,value)
